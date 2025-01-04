@@ -1,0 +1,48 @@
+.conteudo{
+    max-width: 100vw;
+    max-height: 90vh;
+
+    padding: 40px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+
+    background-color: white;
+    color: #E0E0E0;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.tabela{
+    width: 50vw;
+}
+
+.nova_categoria{
+    gap: 30px;
+}
+
+.tabela_header{
+    color: #112a48;
+}
+
+.botao_editar{
+    border: none;
+    background-color: white;
+
+    &:hover{
+        color: #294b84;
+    }
+}
+
+.botao_excluir{
+    border: none;
+    background-color: white;
+
+    &:hover{
+        color: #294b84;
+    }
+}
+
+.categoria_header{
+    color: black;
+}

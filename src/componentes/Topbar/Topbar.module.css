@@ -1,0 +1,93 @@
+.topbar_conteudo {
+    background-color: #04331F;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 10vh;
+    padding: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: white;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
+}
+
+.topbar_corpo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 5px;
+
+    & hr {
+        width: 2px;
+        height: 7vh;
+        background-color: white;
+        opacity: 0.9;
+    }
+}
+
+.botao_categorias {
+    display: flex;
+    text-decoration: none;
+    color: white;
+
+    & :hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+
+}
+
+.topbar_sair{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.botao_deslogar {
+    text-decoration: none;
+    color: white;
+    font-size: 5vh;
+    margin-right: 5px;
+
+    display: flex;
+
+    & :hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+}
+
+.logo {
+    height: 5vh;
+
+    &:hover{
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+}
+
+.botao_perfil {
+    text-decoration: none;
+    color: white;
+    font-size: 5vh;
+    margin-right: 8px;
+
+    display: flex;
+
+    & :hover {
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+}
+
+.pagina_conteudo {
+    margin-top: 10vh;
+}

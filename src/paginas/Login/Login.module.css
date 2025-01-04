@@ -1,0 +1,94 @@
+.conteudo {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #04331F;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 20vw;
+    margin-bottom: 10vh;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.login_container {
+    background-color: #032818;
+    padding: 3%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #E0E0E0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#campos {
+    border: 0;
+    border-bottom: 1px solid;
+    border-radius: 0;
+    border-color: gray;
+    margin-bottom: 3vh;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.login_header {
+    color: #E0E0E0;
+    margin-bottom: 1rem;
+}
+
+.login_body {
+    width: 25vw;
+}
+
+#botao_entrar {
+    background-color: #0D8C57;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    margin-top: 10px;
+
+    &:hover{
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+}
+
+.login_body h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.login_footer Button {
+    color: #E0E0E0;
+
+    &:hover {
+        color: #0D8C57;
+        font-size: 1.1rem;
+        transition: font-size 0.2s ease-in-out;
+    }
+
+    &:focus {
+        border: none;
+    }
+}
+
+.mensagem {
+    text-align: center;
+    color: #81c995;
+}
+
+.aviso {
+    text-align: center;
+    color: #f28b82;
+}
