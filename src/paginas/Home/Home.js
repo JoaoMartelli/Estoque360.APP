@@ -1,7 +1,7 @@
 import style from "./Home.module.css";
 import Logo from "../../assets/LogoEstoque360.png";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Caixas from "../../assets/Caixas.png";
 import Pessoas from "../../assets/Pessoas.jpeg";
 
@@ -33,6 +33,8 @@ export default function Home() {
                 <div className={style.informacoes}>
                     <img src={Caixas} alt="Caixas" />
                     <p>Junte-se ao Estoque360 e dê o próximo passo na profissionalização do seu negócio! Cadastre-se agora mesmo e tenha acesso a uma ferramenta intuitiva e completa que vai transformar a forma como você gerencia seus produtos. Simplifique o controle do seu estoque e foque no que realmente importa: o sucesso do seu negócio!
+                        <br/>
+                        <Link to="/login" id={style.cadastrar}>Cadastre-se</Link>
                     </p>
                 </div>
             </div>
