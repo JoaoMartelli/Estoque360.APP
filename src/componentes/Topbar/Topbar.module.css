@@ -14,7 +14,7 @@
     justify-content: space-between;
 
     color: white;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
 }
@@ -37,6 +37,13 @@
     display: flex;
     text-decoration: none;
     color: white;
+    transition: transform 0.2s ease-in-out;
+
+    & h2
+    {
+        font-size: 1.5rem;
+        margin: 0;
+    }
 
     & :hover {
         transform: scale(1.1);
@@ -56,7 +63,7 @@
     color: white;
     font-size: 5vh;
     margin-right: 5px;
-
+    transition: transform 0.2s ease-in-out;
     display: flex;
 
     & :hover {
@@ -67,6 +74,7 @@
 
 .logo {
     height: 5vh;
+    transition: transform 0.2s ease-in-out;
 
     &:hover{
         transform: scale(1.1);
@@ -79,7 +87,7 @@
     color: white;
     font-size: 5vh;
     margin-right: 8px;
-
+    transition: transform 0.2s ease-in-out;
     display: flex;
 
     & :hover {

@@ -29,13 +29,12 @@ export function Topbar({ children }) {
                     <Link to="/Categorias" className={style.botao_categorias}>
                         <h2>Categorias</h2>
                     </Link>
+                    {/* <Link to="/Produtos" className={style.botao_categorias}>
+                        <h2>Produtos</h2>
+                    </Link> */}
                 </div>
 
                 <div className={style.topbar_sair}>
-                    <Link to="/Perfil" className={style.botao_perfil}>
-                        <MdAccountCircle />
-                    </Link>
-
                     <Link to='/login' className={style.botao_deslogar} onClick={Sair}>
                         <MdLogout />
                     </Link>

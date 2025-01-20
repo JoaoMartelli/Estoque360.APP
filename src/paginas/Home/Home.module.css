@@ -24,7 +24,9 @@
     border: none;
     height: 5vh;
     margin-right: 2vh;
-    width: 4vw;
+    padding: 1vh;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: transform 0.2s ease-in-out;
 
     &:hover{
         transform: scale(1.1);
@@ -47,6 +49,8 @@
 
 .logo {
     height: 5vh;
+
+    transition: transform 0.2s ease-in-out;
 
     &:hover{
         transform: scale(1.1);
@@ -72,6 +76,7 @@
     & img{
         border: 7px solid #04331F;
         height: 50vh;
+        border-radius: 3%;
     }
 }
 
@@ -84,6 +89,7 @@
     padding-top: 0.5vh;
     padding-bottom: 0.5vh;
     background-color: #04331F;
+    transition: transform 0.2s ease-in-out;
     
     &:hover{
         transform: scale(1.1);

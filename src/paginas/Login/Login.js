@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import UsuarioApi from "../../services/UsuarioApi";
 import Alert from "../../componentes/Alerta/Alerta";
 import Logo from "../../assets/LogoEstoque360.png";
+import Loader from "../../componentes/Loader/Loader";
+import InputMask from 'react-input-mask';
 
 export function Login() {
     const [nome, setNome] = useState('');
@@ -16,6 +18,7 @@ export function Login() {
     const [mostrarAlerta, setMostrarAlerta] = useState(false);
     const [mensagemAlerta, setMensagemAlerta] = useState('');
     const [tipoAlerta, setTipoAlerta] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const exibirAlerta = () => {
@@ -25,7 +28,15 @@ export function Login() {
         }, 10000);
     };
 
+    function resetar() {
+        setNome('');
+        setEmail('');
+        setDataNascimento('');
+        setSenha('');
+    }
+
     async function botaoLogin() {
+        setLoading(true);
         try {
             const id = await UsuarioApi.Login(email, senha);
             localStorage.setItem('id', id);
@@ -35,10 +46,14 @@ export function Login() {
             setTipoAlerta('danger');
             exibirAlerta();
         }
+        finally {
+            setLoading(false);
+            resetar();
+        }
     }
 
     async function botaoCadastro() {
-
+        setLoading(true);
         try {
             await UsuarioApi.CriarUsuario(nome, dataNascimento, email, senha);
             setMensagemAlerta("Usuário cadastrado com sucesso, faça login!");
@@ -50,10 +65,14 @@ export function Login() {
             setTipoAlerta('danger');
             exibirAlerta();
         }
+        finally {
+            setLoading(false);
+            resetar();
+        }
     }
 
     useEffect(() => {
-        if(localStorage.getItem('id') != null){
+        if (localStorage.getItem('id') != null) {
             navigate('/Categorias');
         }
         setMensagemAlerta('');
@@ -63,6 +82,8 @@ export function Login() {
 
     return (
         <div className={style.conteudo}>
+            {loading && <Loader />}
+            
             <div className={style.login_container}>
                 <img src={Logo} alt="Logo-Estoque360" className={style.logo} />
                 <div className={style.login_body}>
@@ -84,7 +105,27 @@ export function Login() {
 
                                 <Form.Group controlId="formDataNascimento" className="mb-3">
                                     <Form.Label>Data nascimento</Form.Label>
-                                    <Form.Control id={style.campos} type="date" name="dataNascimento" value={dataNascimento} onChange={(e) => setDataNascimento(e.target.value)} required />
+                                    <Form.Control
+                                        id={style.campos}
+                                        type="date"
+                                        name="dataNascimento"
+                                        value={dataNascimento}
+                                        onChange={(e) => {
+                                            const data = e.target.value;
+                                            const anoAtual = new Date().getFullYear();
+                                            const anoNascimento = new Date(data).getFullYear();
+
+                                            if (anoNascimento > anoAtual) {
+                                                setMensagemAlerta("Data de nascimento inválida.");
+                                                setTipoAlerta('danger');
+                                                exibirAlerta();
+                                                setDataNascimento("");
+                                            } else {
+                                                setDataNascimento(data);
+                                            }
+                                        }}
+                                        required
+                                    />
                                 </Form.Group>
                             </>
                         )}
@@ -105,7 +146,7 @@ export function Login() {
                     </Form>
                 </div>
                 <div className={style.login_footer}>
-                    <Button variant="second" onClick={() => setCadastro(!cadastro)}>
+                    <Button variant="second" onClick={() => { resetar(); setCadastro(!cadastro); }}>
                         {cadastro ? "Já tem uma conta? Faça login" : "Não tem uma conta? Cadastre-se"}
                     </Button>
                 </div>

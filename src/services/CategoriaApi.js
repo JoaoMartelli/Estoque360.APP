@@ -17,10 +17,10 @@ const CategoriaApi = {
         return response.data;
     },
 
-    async EditarCategoria(nomeAntigo, nomeNovo){
+    async EditarCategoria(id, nomeNovo){
         const categoria = {
-            NomeAntigo: nomeAntigo,
-            NovoNome: nomeNovo
+            CategoriaId: id,
+            NomeNovo: nomeNovo
         }
 
         const response = await HTTPClient.put(`Categoria/Atualizar`, categoria);

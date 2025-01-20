@@ -1,26 +1,15 @@
-import styles from './_loader.module.css'
+import React from 'react';
+import { Spinner } from 'react-bootstrap';
+import styles from './_loader.module.css';
 
-const Loader = () => {
+function Loader() {
     return (
-        <div className={styles.escuro}>
-        <div className={styles.spinner}>
-            <div className={styles.center}>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                <div className={styles.spinnerBlade}></div>
-                </div>
-            </div>
+        <div className={styles.loaderOverlay}>
+            <Spinner animation="border" variant="success" role="status">
+                <span className="visually-hidden">Carregando...</span>
+            </Spinner>
         </div>
-    )
+    );
 }
 
 export default Loader;

@@ -5,42 +5,130 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { MdDelete, MdEdit } from "react-icons/md";
 import CategoriaApi from "../../services/CategoriaApi";
+import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
+import Loader from "../../componentes/Loader/Loader";
+import Alert from "../../componentes/Alerta/Alerta";
+import { Link } from "react-router-dom";
 
 export function Categorias() {
     const [categorias, setCategorias] = useState([]);
+    const [nome, setNome] = useState(null);
     const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
     const [usuarioId, setUsuarioId] = useState(null);
-    const [novaCategoria, setNovaCategoria] = useState(true);
-    const [mensagem, setMensagem] = useState(null);
-    const [aviso, setAviso] = useState(null);
-    const [nome, setNome] = useState(null);
+    const [mostrarAlerta, setMostrarAlerta] = useState(false);
+    const [mensagemAlerta, setMensagemAlerta] = useState('');
+    const [tipoAlerta, setTipoAlerta] = useState('');
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [adicionar, setAdicionar] = useState(false);
+    const [remover, setRemover] = useState(false);
+    const [editar, setEditar] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [categoriaId, setCategoriaId] = useState(null);
 
-    function botaoEditar(id) {
-        setCategoriaSelecionada(id);
-        setNovaCategoria(false);
-    }
-
-    function botaoCancelar() {
-        setNovaCategoria(true);
+    const handleFecharModal = () => {
+        setMostrarModal(false);
         setCategoriaSelecionada(null);
+        setRemover(false);
+        setAdicionar(false);
+        setEditar(false);
+        setNome(null);
+        setCategoriaId(null);
+    };
+
+    function modalEditar(categoria) {
+        setLoading(true);
+        setNome(categoria.nome);
+        setCategoriaId(categoria.id);
+        setEditar(true);
+        setMostrarModal(true);
+        setLoading(false);
     }
 
-    function botaoExcluir(id) {
+    const exibirAlerta = () => {
+        setMostrarAlerta(true);
+        setTimeout(() => {
+            setMostrarAlerta(false);
+        }, 10000);
+    };
 
+    function modalExcluir(categoria) {
+        setLoading(true);
+        setCategoriaSelecionada(categoria);
+        setRemover(true);
+        setMostrarModal(true);
+        setLoading(false);
     }
 
-    function editarCategoria() {
-
+    function modalAdicionar() {
+        setLoading(true);
+        setAdicionar(true);
+        setNome(null);
+        setMostrarModal(true);
+        setLoading(false);
     }
 
-    function adicionarCategoria() {
+    async function excluirCategoria() {
+        try {
+            setLoading(true);
+            await CategoriaApi.ExcluirCategoria(categoriaSelecionada.id);
+            obterCategorias(usuarioId);
+            setMensagemAlerta(`Categoria excluida com sucesso!`);
+            setTipoAlerta('success');
+        }
+        catch (error) {
+            setMensagemAlerta(`Erro ao excluir a categoria: ${error.response.data}`);
+            setTipoAlerta('danger');
+        }
+        finally {
+            handleFecharModal();
+            setLoading(false);
+            exibirAlerta();
+        }
+    }
 
+    async function editarCategoria() {
+        try {
+            setLoading(true);
+            await CategoriaApi.EditarCategoria(categoriaId, nome);
+            obterCategorias(usuarioId)
+            setMensagemAlerta(`Categoria atualizada com sucesso!`);
+            setTipoAlerta('success');
+        }
+        catch (error) {
+            setMensagemAlerta(`Erro ao atualizar a categoria: ${error.response.data}`);
+            setTipoAlerta('danger');
+        }
+        finally {
+            handleFecharModal();
+            setLoading(false);
+            exibirAlerta();
+        }
+    }
+
+    async function adicionarCategoria() {
+        try {
+            setLoading(true);
+            await CategoriaApi.AdicionarCategoria(nome, usuarioId);
+            obterCategorias(usuarioId)
+            setMensagemAlerta(`Categoria adicionada com sucesso!`);
+            setTipoAlerta('success');
+        }
+        catch (error) {
+            setMensagemAlerta(`Erro ao adicionar a categoria: ${error.response.data}`);
+            setTipoAlerta('danger');
+        }
+        finally {
+            handleFecharModal();
+            setLoading(false);
+            exibirAlerta();
+        }
     }
 
     async function obterCategorias(id) {
         try {
             const lista = await CategoriaApi.ObterCategorias(id, true);
+            handleFecharModal();
             setCategorias(lista);
         }
         catch (error) {
@@ -49,33 +137,114 @@ export function Categorias() {
     }
 
     useEffect(() => {
+        setLoading(true);
         const id = localStorage.getItem('id');
-        setNovaCategoria(true);
         setUsuarioId(id);
         obterCategorias(id);
+        setLoading(false);
     }, [])
 
     return (
         <Topbar>
             <div className={style.conteudo}>
+                <Alert
+                    tipo={tipoAlerta}
+                    mensagem={mensagemAlerta}
+                    visivel={mostrarAlerta}
+                    aoFechar={() => setMostrarAlerta(false)}
+                />
+                {loading && <Loader />}
+
+                <Modal show={mostrarModal} onHide={handleFecharModal}>
+                    {adicionar ? <>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Adicionar categoria</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <Form.Group controlId="formNome" className="mb-3">
+                                <Form.Control type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                            </Form.Group>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={handleFecharModal}>
+                                Cancelar
+                            </Button>
+
+                            <Button variant="success" onClick={adicionarCategoria}>
+                                Adicionar
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                        : null}
+                    {editar ? <>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Atualizar categoria</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            <Form.Group controlId="formNome" className="mb-3">
+                                <Form.Control type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                            </Form.Group>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={handleFecharModal}>
+                                Cancelar
+                            </Button>
+
+                            <Button variant="success" onClick={editarCategoria}>
+                                Atualizar
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                        : null}
+                    {remover ? <>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmar</Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+                            Tem certeza que deseja remover a categoria {categoriaSelecionada?.nome}?
+                        </Modal.Body>
+
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleFecharModal}>
+                                Cancelar
+                            </Button>
+
+                            <Button variant="danger" onClick={excluirCategoria}>
+                                Deletar
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                        : null}
+                </Modal>
+                <div className={style.pagina_cabecalho}>
+                    <h3>Categorias</h3>
+                    <Link onClick={modalAdicionar} className={style.botao_novo}>+ Novo</Link>
+                </div>
+
                 <div className={style.tabela}>
                     <Table responsive className={style.table}>
                         <thead className={style.tabela_header}>
                             <tr>
-                                <th>Categorias</th>
-                                <th>Ações</th>
+                                <th id={style.campos}>Categorias</th>
+                                <th id={style.campos}>Ações</th>
                             </tr>
                         </thead>
                         <tbody className={style.tabela_body}>
                             {categorias.map((x) => (
                                 <tr key={x.id}>
-                                    <td>{x.nome}</td>
-                                    {/* Adicionar um <Link> no nome acima após finalizar a página de categorias */}
-                                    <td>
-                                        <button onClick={() => botaoEditar(x.id)} className={style.botao_editar}>
+                                    <td id={style.linha}><Link to='/Produtos' state={x.id} id={style.produtos}>
+                                        {x.nome}
+                                    </Link></td>
+                                    <td id={style.linha}>
+                                        <button onClick={() => { setCategoriaSelecionada(x); modalEditar(x) }} className={style.botao_editar}>
                                             <MdEdit />
                                         </button>
-                                        <button onClick={() => botaoExcluir(x.id)} className={style.botao_excluir}>
+                                        <button onClick={() => { setCategoriaSelecionada(x); modalExcluir(x) }} className={style.botao_excluir}>
                                             <MdDelete />
                                         </button>
                                     </td>
@@ -83,30 +252,6 @@ export function Categorias() {
                             ))}
                         </tbody>
                     </Table>
-                </div>
-
-                <div className={style.nova_categoria}>
-                    <div className={style.categoria_header}>
-                        <h3>{novaCategoria ? "Nova Categoria" : "Editar Categoria"}</h3>
-                    </div>
-                    <div className={style.categoria_body}>
-                        <Form onSubmit={(e) => {
-                            e.preventDefault();
-                            if (novaCategoria) {
-                                adicionarCategoria();
-                            }
-                            else {
-                                editarCategoria();
-                            }
-                        }} >
-                            <Form.Group controlId="formNome" className="mb-3">
-                                <Form.Control type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
-                            </Form.Group>
-                        </Form>
-                    </div>
-                    <div className={style.categoria_footer}>
-
-                    </div>
                 </div>
             </div>
         </Topbar>
