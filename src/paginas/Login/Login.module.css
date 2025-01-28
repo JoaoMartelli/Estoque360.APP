@@ -2,22 +2,23 @@
     width: 100vw;
     height: 100vh;
 
-    background-color: #04331F;
+    background-color: #2C2C2C;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: Tahoma, sans-serif;
 }
 
 .logo {
-    width: 20vw;
+    width: 22vw;
     margin-bottom: 10vh;
     display: flex;
     justify-content: flex-start;
 }
 
 .login_container {
-    background-color: #032818;
+    background-color: #3A3A3A;
     padding: 3%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #E0E0E0;
@@ -51,11 +52,12 @@
 }
 
 #botao_entrar {
-    background-color: #0D8C57;
+    background-color: black;
     width: 100%;
     border: none;
     border-radius: 0;
     margin-top: 10px;
+    transition: transform 0.2s ease-in-out;
 
     &:hover{
         transform: scale(1.1);
@@ -71,9 +73,11 @@
 
 .login_footer Button {
     color: #E0E0E0;
+    transition: transform 0.2s ease-in-out;
+
 
     &:hover {
-        color: #0D8C57;
+        color: black;
         font-size: 1.1rem;
         transition: font-size 0.2s ease-in-out;
     }

@@ -1,5 +1,5 @@
 .topbar_conteudo {
-    background-color: #04331F;
+    background-color: #2C2C2C;
 
     position: fixed;
     top: 0;
@@ -14,8 +14,7 @@
     justify-content: space-between;
 
     color: white;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
+    font-family: Tahoma, sans-serif;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
 }
 
@@ -24,13 +23,6 @@
     align-items: center;
     gap: 15px;
     margin-left: 5px;
-
-    & hr {
-        width: 2px;
-        height: 7vh;
-        background-color: white;
-        opacity: 0.9;
-    }
 }
 
 .botao_categorias {
@@ -38,6 +30,7 @@
     text-decoration: none;
     color: white;
     transition: transform 0.2s ease-in-out;
+    margin-left: 1vw;
 
     & h2
     {
@@ -58,11 +51,11 @@
     justify-content: flex-end;
 }
 
-.botao_deslogar {
+#botao_deslogar {
     text-decoration: none;
     color: white;
-    font-size: 5vh;
-    margin-right: 5px;
+    font-size: 4vh;
+    margin-right: 10px;
     transition: transform 0.2s ease-in-out;
     display: flex;
 
@@ -73,8 +66,9 @@
 }
 
 .logo {
-    height: 5vh;
+    height: 7vh;
     transition: transform 0.2s ease-in-out;
+    margin-right: 2vw;
 
     &:hover{
         transform: scale(1.1);

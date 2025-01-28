@@ -10,8 +10,11 @@ import Form from "react-bootstrap/Form";
 import Loader from "../../componentes/Loader/Loader";
 import Alert from "../../componentes/Alerta/Alerta";
 import { Link } from "react-router-dom";
+import { SearchBar } from "../../componentes/SearchBar/SearchBar";
 
 export function Categorias() {
+    const [search, setSearch] = useState('');
+
     const [categorias, setCategorias] = useState([]);
     const [nome, setNome] = useState(null);
     const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
@@ -67,6 +70,10 @@ export function Categorias() {
         setMostrarModal(true);
         setLoading(false);
     }
+
+    const categoriasFiltradas = categorias.filter(categorias =>
+        categorias.nome?.toLowerCase().includes(search.toLowerCase())
+    );
 
     async function excluirCategoria() {
         try {
@@ -162,8 +169,11 @@ export function Categorias() {
                         </Modal.Header>
 
                         <Modal.Body>
+
                             <Form.Group controlId="formNome" className="mb-3">
-                                <Form.Control type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                                <Form.Label id={style.label}>Nome</Form.Label>
+
+                                <Form.Control id={style.formulario} type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
                             </Form.Group>
                         </Modal.Body>
 
@@ -185,7 +195,8 @@ export function Categorias() {
 
                         <Modal.Body>
                             <Form.Group controlId="formNome" className="mb-3">
-                                <Form.Control type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
+                                <Form.Label id={style.label}>Nome</Form.Label>
+                                <Form.Control id={style.formulario} type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
                             </Form.Group>
                         </Modal.Body>
 
@@ -225,17 +236,23 @@ export function Categorias() {
                     <h3>Categorias</h3>
                     <Link onClick={modalAdicionar} className={style.botao_novo}>+ Novo</Link>
                 </div>
+                <div className={style.pesquisa}>
+                    <SearchBar
+                        placeholder="Nome"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
 
                 <div className={style.tabela}>
                     <Table responsive className={style.table}>
                         <thead className={style.tabela_header}>
                             <tr>
-                                <th id={style.campos}>Categorias</th>
+                                <th id={style.campos}>Nome</th>
                                 <th id={style.campos}>Ações</th>
                             </tr>
                         </thead>
                         <tbody className={style.tabela_body}>
-                            {categorias.map((x) => (
+                            {categoriasFiltradas.map((x) => (
                                 <tr key={x.id}>
                                     <td id={style.linha}><Link to='/Produtos' state={x.id} id={style.produtos}>
                                         {x.nome}
@@ -251,6 +268,13 @@ export function Categorias() {
                                 </tr>
                             ))}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td id={style.tabela_footer} colSpan="2">
+                                    Total de categorias: {categoriasFiltradas.length}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </Table>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 .topbar_conteudo {
-    background-color: #04331F;
+    background-color: #2C2C2C;
 
     position: fixed;
     top: 0;
@@ -14,21 +14,24 @@
     justify-content: space-between;
 
     color: white;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-
+    font-family: Tahoma, sans-serif;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
 }
 
-#botao_entrar{
-    background-color: #0D8C57;
-    border: none;
-    height: 5vh;
-    margin-right: 2vh;
-    padding: 1vh;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+#botao_entrar {
+    margin-right: 1vw;
+    background-color: #4F4F4F;
+    color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-family: "Segoe UI", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
     transition: transform 0.2s ease-in-out;
 
-    &:hover{
+    &:hover {
         transform: scale(1.1);
         transition: transform 0.2s ease-in-out;
     }
@@ -41,24 +44,24 @@
     margin-left: 5px;
 }
 
-.topbar_sair{
+.topbar_sair {
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
 .logo {
-    height: 5vh;
-
+    height: 7vh;
     transition: transform 0.2s ease-in-out;
+    margin-right: 2vw;
 
-    &:hover{
+    &:hover {
         transform: scale(1.1);
         transition: transform 0.2s ease-in-out;
     }
 }
 
-.informacoes{
+.informacoes {
     margin-right: 15vw;
     margin-left: 15vw;
     display: flex;
@@ -67,20 +70,20 @@
     margin-bottom: 5vh;
     margin-top: 5vh;
     text-align: justify;
-    font-weight: 500;        
+    font-weight: 500;
     font-size: 1.2rem;
     text-indent: 2vw;
     line-height: 1.6;
-    color: white;
+    color: #1A1A1A;
 
-    & img{
-        border: 7px solid #04331F;
+    & img {
+        border: 7px solid #4F4F4F;
         height: 50vh;
         border-radius: 3%;
     }
 }
 
-#cadastrar{
+#cadastrar {
     text-decoration: none;
     display: flex;
     color: white;
@@ -88,10 +91,10 @@
     margin-top: 3vh;
     padding-top: 0.5vh;
     padding-bottom: 0.5vh;
-    background-color: #04331F;
+    background-color: #4F4F4F;
     transition: transform 0.2s ease-in-out;
-    
-    &:hover{
+
+    &:hover {
         transform: scale(1.1);
         transition: transform 0.2s ease-in-out;
     }
@@ -100,7 +103,7 @@
 .pagina_conteudo {
     margin-top: 10vh;
     min-height: 90vh;
-    background-color: #0D8C57;
+    background-color: #E5E5E5;
     display: flex;
     flex-direction: column;
     align-items: center;

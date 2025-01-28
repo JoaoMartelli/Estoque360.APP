@@ -5,7 +5,7 @@ import { Button, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import UsuarioApi from "../../services/UsuarioApi";
 import Alert from "../../componentes/Alerta/Alerta";
-import Logo from "../../assets/LogoEstoque360.png";
+import Logo from "../../assets/LogoBrancoEstoque360.png";
 import Loader from "../../componentes/Loader/Loader";
 import InputMask from 'react-input-mask';
 

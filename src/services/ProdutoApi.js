@@ -7,6 +7,12 @@ const ProdutoApi = {
         return response.data;
     },
 
+    async ObterProdutosPorUsuarioId(usuarioId){
+
+        const response = await HTTPClient.get(`Produto/ObterPorUsuarioId/${usuarioId}`,);
+        return response.data;
+    },
+
     async AdicionarProduto(categoriaId, nome, preco, quantidade){
         const Produto = {
             CategoriaId: categoriaId,

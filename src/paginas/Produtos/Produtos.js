@@ -11,11 +11,13 @@ import Loader from "../../componentes/Loader/Loader";
 import Alert from "../../componentes/Alerta/Alerta";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { SearchBar } from "../../componentes/SearchBar/SearchBar";
+import CategoriaApi from "../../services/CategoriaApi";
 
 export function Produtos() {
     const location = useLocation();
 
-    const [id] = useState(location.state);
+    const [search, setSearch] = useState('');
     const [preco, setPreco] = useState(null);
     const [quantidade, setQuantidade] = useState(null);
     const [Produtos, setProdutos] = useState([]);
@@ -30,6 +32,9 @@ export function Produtos() {
     const [editar, setEditar] = useState(false);
     const [loading, setLoading] = useState(false);
     const [ProdutoId, setProdutoId] = useState(null);
+    const [categoriaId, setCategoriaId] = useState(location.state);
+    const [categoriaIdSelecionada, setCategoriaIdSelecionada] = useState(categoriaId);
+    const [categorias, setCategorias] = useState([]);
 
     const handleFecharModal = () => {
         setMostrarModal(false);
@@ -53,6 +58,11 @@ export function Produtos() {
         setMostrarModal(true);
         setLoading(false);
     }
+
+    const produtosFiltrados = Produtos.filter(produtos =>
+        produtos.nome?.toLowerCase().includes(search.toLowerCase())
+    );
+
 
     const exibirAlerta = () => {
         setMostrarAlerta(true);
@@ -83,7 +93,7 @@ export function Produtos() {
         try {
             setLoading(true);
             await ProdutoApi.ExcluirProduto(ProdutoSelecionada.id);
-            obterProdutos(id);
+            obterProdutos();
             setMensagemAlerta(`Produto excluido com sucesso!`);
             setTipoAlerta('success');
         }
@@ -102,7 +112,7 @@ export function Produtos() {
         try {
             setLoading(true);
             await ProdutoApi.EditarProduto(ProdutoId, nome, preco, quantidade);
-            obterProdutos(id)
+            obterProdutos()
             setMensagemAlerta(`Produto atualizado com sucesso!`);
             setTipoAlerta('success');
         }
@@ -120,8 +130,8 @@ export function Produtos() {
     async function adicionarProduto() {
         try {
             setLoading(true);
-            await ProdutoApi.AdicionarProduto(id, nome, preco, quantidade);
-            obterProdutos(id)
+            await ProdutoApi.AdicionarProduto(categoriaId, nome, preco, quantidade);
+            obterProdutos()
             setMensagemAlerta(`Produto adicionado com sucesso!`);
             setTipoAlerta('success');
         }
@@ -136,22 +146,44 @@ export function Produtos() {
         }
     }
 
-    async function obterProdutos(id) {
+    async function obterProdutos() {
         try {
-            const lista = await ProdutoApi.ObterProdutos(id, true);
-            handleFecharModal();
-            setProdutos(lista);
+            if (categoriaId != null) {
+                const lista = await ProdutoApi.ObterProdutos(categoriaId, true);
+                handleFecharModal();
+                setProdutos(lista);
+            }
+            else {
+                const lista = await ProdutoApi.ObterProdutosPorUsuarioId(localStorage.getItem('id'), true);
+                handleFecharModal();
+                setProdutos(lista);
+            }
         }
         catch (error) {
             console.log("Erro ao carregar os Produtos", error);
         }
     }
 
+    async function obterCategorias() {
+        try {
+            const lista = await CategoriaApi.ObterCategorias(localStorage.getItem('id'), true);
+            handleFecharModal();
+            setCategorias(lista);
+        }
+        catch (error) {
+            console.log("Erro ao carregar as categorias", error);
+        }
+    }
+    useEffect(() => {
+        obterProdutos();
+    }, [categoriaId]);
+
     useEffect(() => {
         setLoading(true);
-        obterProdutos(id);
+        obterCategorias();
+        obterProdutos();
         setLoading(false);
-    }, [id])
+    }, [])
 
     return (
         <Topbar>
@@ -172,8 +204,10 @@ export function Produtos() {
 
                         <Modal.Body>
                             <Form.Group controlId="formNome" className="mb-3">
+                                <Form.Label id={style.label}>Nome</Form.Label>
                                 <Form.Control
                                     type="text"
+                                    id={style.formulario}
                                     placeholder="Nome"
                                     name="nome"
                                     value={nome}
@@ -182,7 +216,9 @@ export function Produtos() {
                                 />
                             </Form.Group>
                             <Form.Group controlId="formQuantidade" className="mb-3">
+                                <Form.Label id={style.label}>Quantidade</Form.Label>
                                 <Form.Control
+                                    id={style.formulario}
                                     type="number"
                                     placeholder="Quantidade"
                                     name="quantidade"
@@ -192,7 +228,9 @@ export function Produtos() {
                                 />
                             </Form.Group>
                             <Form.Group controlId="formPreco" className="mb-3">
+                                <Form.Label id={style.label}>Preço</Form.Label>
                                 <Form.Control
+                                    id={style.formulario}
                                     type="number"
                                     placeholder="Preço"
                                     name="preco"
@@ -202,6 +240,23 @@ export function Produtos() {
                                     required
                                 />
                             </Form.Group>
+                            <Form.Group controlId="categoriaId" className="mb-3">
+                                <Form.Label id={style.label}>Preço</Form.Label>
+                                <Form.Control
+                                    id={style.formulario}
+                                    as="select"
+                                    name="categoria"
+                                    value={categoriaId}
+                                    onChange={(e) => { const value = e.target.value; setCategoriaId(value); }}
+                                    required
+                                >
+                                    <option value={null}>Todos produtos</option>
+                                    {categorias.map((x) => (
+                                        <option value={x.id}>{x.nome}</option>
+                                    ))}
+                                </Form.Control>
+                            </Form.Group>
+
                         </Modal.Body>
 
                         <Modal.Footer>
@@ -222,8 +277,10 @@ export function Produtos() {
 
                         <Modal.Body>
                             <Form.Group controlId="formNome" className="mb-3">
+                                <Form.Label id={style.label}>Nome</Form.Label>
                                 <Form.Control
                                     type="text"
+                                    id={style.formulario}
                                     placeholder="Nome"
                                     name="nome"
                                     value={nome}
@@ -232,7 +289,9 @@ export function Produtos() {
                                 />
                             </Form.Group>
                             <Form.Group controlId="formQuantidade" className="mb-3">
+                                <Form.Label id={style.label}>Quantidade</Form.Label>
                                 <Form.Control
+                                    id={style.formulario}
                                     type="number"
                                     placeholder="Quantidade"
                                     name="quantidade"
@@ -242,7 +301,9 @@ export function Produtos() {
                                 />
                             </Form.Group>
                             <Form.Group controlId="formPreco" className="mb-3">
+                                <Form.Label id={style.label}>Preço</Form.Label>
                                 <Form.Control
+                                    id={style.formulario}
                                     type="number"
                                     placeholder="Preço"
                                     name="preco"
@@ -290,7 +351,25 @@ export function Produtos() {
                     <h3>Produtos</h3>
                     <Link onClick={modalAdicionar} className={style.botao_novo}>+ Novo</Link>
                 </div>
-
+                <div className={style.pesquisa}>
+                    <SearchBar
+                        placeholder="Nome"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <Form.Control
+                        id={style.formCategorias}
+                        as="select"
+                        name="categoria"
+                        value={categoriaId}
+                        onChange={(e) => { const value = e.target.value; setCategoriaId(value); }}
+                        required
+                    >
+                        <option value={null}>Todos produtos</option>
+                        {categorias.map((x) => (
+                            <option value={x.id}>{x.nome}</option>
+                        ))}
+                    </Form.Control>
+                </div>
                 <div className={style.tabela}>
                     <Table responsive className={style.table}>
                         <thead className={style.tabela_header}>
@@ -302,7 +381,7 @@ export function Produtos() {
                             </tr>
                         </thead>
                         <tbody className={style.tabela_body}>
-                            {Produtos.map((x) => (
+                            {produtosFiltrados.map((x) => (
                                 <tr key={x.id}>
                                     <td id={style.linha}>{x.nome}</td>
                                     <td id={style.linha}>{x.preco}</td>
@@ -318,6 +397,13 @@ export function Produtos() {
                                 </tr>
                             ))}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td id={style.tabela_footer} colSpan="4">
+                                    Total de produtos: {produtosFiltrados.length}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </Table>
                 </div>
             </div>

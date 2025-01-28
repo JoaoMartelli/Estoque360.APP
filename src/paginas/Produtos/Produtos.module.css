@@ -6,8 +6,8 @@
     padding-left: 10vw;
     padding-right: 10vw;
 
-    background-color: #0D8C57;
-    color: #E0E0E0;
+    background-color: #E5E5E5;
+    color: #2C2C2C;
 
     display: flex;
     flex-direction: column;
@@ -15,51 +15,125 @@
     align-items: center;
 }
 
+#formCategorias{
+    width: 25%;
+
+    &:focus{
+        box-shadow: none;
+    }
+}
+
+#produtos {
+    text-decoration: none;
+    color: white;
+}
+
 .pagina_cabecalho {
     display: flex;
     justify-content: space-between;
     width: 70vw;
     align-items: center;
+    color: black;
+}
+
+.pesquisa {
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    align-items: center;
+    margin-top: 1.5vh;
     margin-bottom: 3vh;
+    color: black;
+}
+
+#formulario{
+    box-shadow: none;
+}
+
+#label{
+    margin-left: 7.5px;
+}
+
+#formulario{
+    box-shadow: none;
+}
+
+.pagina_cabecalho .botao_novo {
+    text-decoration: none;
     color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    background-color: #1A1A1A;
+    transition: transform 0.2s ease-in-out;
+}
 
-    & .botao_novo {
-        text-decoration: none;
-
-        color: white;
-
-        padding: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
-
-        border-radius: 10px;
-        background-color: #04331F;
-        transition: transform 0.2s ease-in-out;
-
-        &:hover {
-            transform: scale(1.1);
-            transition: transform 0.2s ease-in-out;
-        }
-    }
+.pagina_cabecalho .botao_novo:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
 }
 
 #campos {
-    color: white;
-    background-color: #04331F;
-    border: 2px solid #4C8A70;
+    color: #E5E5E5;
+    background-color: #333333;
+    border: 2px solid #444444;
+}
+
+#tabela_footer {
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    color: #E5E5E5;
+    background-color: #333333;
+    border: 2px solid #444444;
 }
 
 #linha {
-    color: white;
-    background-color: #1E4B3E;
-    border: 2px solid #4C8A70;
+    color: #E5E5E5;
+    background-color: #444444;
+    border: 2px solid #555555;
+    font-weight: bold;
+}
+
+.table {
+    margin: 0 !important;
 }
 
 .tabela {
     width: 70vw;
-    overflow-x: auto;
     max-width: 100%;
-    white-space: nowrap;
+    overflow-x: auto;
+    background-color: #333333;
+    border: none;
+}
+
+.tabela::-webkit-scrollbar {
+    height: 8px;
+}
+
+.tabela::-webkit-scrollbar-track {
+    background-color: #444444;
+    border-radius: 4px;
+}
+
+.tabela::-webkit-scrollbar-thumb {
+    background-color: #333333;
+    border-radius: 4px;
+    border: 2px solid #555555;
+}
+
+.tabela::-webkit-scrollbar-thumb:hover {
+    background-color: #666666;
+}
+
+.tabela-wrapper {
+    position: relative;
+    overflow-x: auto;
+}
+
+.tabela-wrapper::-webkit-scrollbar {
+    display: block;
 }
 
 .nova_categoria {
@@ -67,7 +141,14 @@
 }
 
 .tabela_header {
-    color: #112a48;
+    background-color: #2C2C2C;
+    color: #E5E5E5;
+    text-align: left;
+    padding: 10px;
+}
+
+.tabela_header th {
+    padding: 10px;
 }
 
 .botao_editar {
@@ -75,11 +156,11 @@
     background-color: transparent;
     color: white;
     transition: transform 0.2s ease-in-out;
+}
 
-    &:hover {
-        transform: scale(1.2);
-        transition: transform 0.2s ease-in-out;
-    }
+.botao_editar:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
 }
 
 .botao_excluir {
@@ -87,13 +168,9 @@
     background-color: transparent;
     color: white;
     transition: transform 0.2s ease-in-out;
-
-    &:hover {
-        transform: scale(1.2);
-        transition: transform 0.2s ease-in-out;
-    }
 }
 
-.categoria_header {
-    color: black;
+.botao_excluir:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
 }
