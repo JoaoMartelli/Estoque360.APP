@@ -36,6 +36,11 @@ export function Produtos() {
     const [categoriaIdSelecionada, setCategoriaIdSelecionada] = useState(categoriaId);
     const [categorias, setCategorias] = useState([]);
 
+    function removerCategoriaId()
+    {
+        setCategoriaId(null);
+    }
+
     const handleFecharModal = () => {
         setMostrarModal(false);
         setProdutoSelecionada(null);
@@ -148,7 +153,8 @@ export function Produtos() {
 
     async function obterProdutos() {
         try {
-            if (categoriaId != null) {
+            console.log(categoriaId);
+            if (categoriaId != null && categoriaId > 0) {
                 const lista = await ProdutoApi.ObterProdutos(categoriaId, true);
                 handleFecharModal();
                 setProdutos(lista);
@@ -361,10 +367,9 @@ export function Produtos() {
                         as="select"
                         name="categoria"
                         value={categoriaId}
-                        onChange={(e) => { const value = e.target.value; setCategoriaId(value); }}
-                        required
+                        onChange={(e) => { setCategoriaId(e.target.value); }} required
                     >
-                        <option value={null}>Todos produtos</option>
+                        <option value={0}>Todos produtos</option>
                         {categorias.map((x) => (
                             <option value={x.id}>{x.nome}</option>
                         ))}
