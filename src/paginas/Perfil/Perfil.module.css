@@ -1,0 +1,114 @@
+.conteudo {
+    width: 100vw;
+    height: 90vh;
+
+    padding: 40px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+
+    background-color: #E5E5E5;
+    color: #2C2C2C;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pagina_cabecalho {
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    align-items: center;
+    color: black;
+}
+
+.botao_novo {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    background-color: #1A1A1A;
+    transition: transform 0.2s ease-in-out;
+}
+
+.editar_foto{
+    text-decoration: none;
+    background-color: #E5E5E5;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    color: black;
+    transition: transform 0.2s ease-in-out;
+}
+
+.botao_sair{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    background-color: red;
+    transition: transform 0.2s ease-in-out;
+}
+
+.remover_foto{
+    color: white;
+}
+
+.foto_perfil_imagem{
+    width: 236px;
+    height: 236px;
+    border: 3px solid #E5E5E5;
+    border-radius: 50%;
+}
+
+.modal_body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.perfil_conteudo{
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+    width: auto;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1A1A1A;
+    padding: 60px;
+    border: 5px solid #000000;
+    border-radius: 30px;
+    color: white;
+    margin-bottom: 3vh;
+}
+
+.foto_perfil{
+    width: 236px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.rodape{
+    display: flex;
+    width: 70vw;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.dados_perfil{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 15px;
+}

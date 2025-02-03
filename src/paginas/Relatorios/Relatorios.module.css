@@ -1,0 +1,16 @@
+.conteudo {
+    width: 100vw;
+    height: 90vh;
+
+    padding: 40px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+
+    background-color: #E5E5E5;
+    color: #2C2C2C;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

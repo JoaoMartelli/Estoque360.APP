@@ -18,6 +18,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
 }
 
+.foto_perfil_imagem{
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+}
+
 .topbar_corpo {
     display: flex;
     align-items: center;

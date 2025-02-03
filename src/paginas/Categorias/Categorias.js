@@ -8,9 +8,9 @@ import CategoriaApi from "../../services/CategoriaApi";
 import Modal from 'react-bootstrap/Modal';
 import Form from "react-bootstrap/Form";
 import Loader from "../../componentes/Loader/Loader";
-import Alert from "../../componentes/Alerta/Alerta";
 import { Link } from "react-router-dom";
 import { SearchBar } from "../../componentes/SearchBar/SearchBar";
+import Alerta from "../../componentes/Alerta/Alerta";
 
 export function Categorias() {
     const [search, setSearch] = useState('');
@@ -154,7 +154,7 @@ export function Categorias() {
     return (
         <Topbar>
             <div className={style.conteudo}>
-                <Alert
+                <Alerta
                     tipo={tipoAlerta}
                     mensagem={mensagemAlerta}
                     visivel={mostrarAlerta}

@@ -36,11 +36,6 @@ export function Produtos() {
     const [categoriaIdSelecionada, setCategoriaIdSelecionada] = useState(categoriaId);
     const [categorias, setCategorias] = useState([]);
 
-    function removerCategoriaId()
-    {
-        setCategoriaId(null);
-    }
-
     const handleFecharModal = () => {
         setMostrarModal(false);
         setProdutoSelecionada(null);
@@ -51,6 +46,7 @@ export function Produtos() {
         setProdutoId(null);
         setPreco(null);
         setQuantidade(null);
+        setCategoriaIdSelecionada(null);
     };
 
     function modalEditar(Produto) {
@@ -135,7 +131,7 @@ export function Produtos() {
     async function adicionarProduto() {
         try {
             setLoading(true);
-            await ProdutoApi.AdicionarProduto(categoriaId, nome, preco, quantidade);
+            await ProdutoApi.AdicionarProduto(categoriaIdSelecionada, nome, preco, quantidade);
             obterProdutos()
             setMensagemAlerta(`Produto adicionado com sucesso!`);
             setTipoAlerta('success');
@@ -247,16 +243,16 @@ export function Produtos() {
                                 />
                             </Form.Group>
                             <Form.Group controlId="categoriaId" className="mb-3">
-                                <Form.Label id={style.label}>Preço</Form.Label>
+                                <Form.Label id={style.label}>Categorias</Form.Label>
                                 <Form.Control
                                     id={style.formulario}
                                     as="select"
                                     name="categoria"
-                                    value={categoriaId}
-                                    onChange={(e) => { const value = e.target.value; setCategoriaId(value); }}
+                                    value={categoriaIdSelecionada}
+                                    onChange={(e) => { const value = e.target.value; setCategoriaIdSelecionada(value); }}
                                     required
                                 >
-                                    <option value={null}>Todos produtos</option>
+                                    <option value={null}>Selecione uma categoria</option>
                                     {categorias.map((x) => (
                                         <option value={x.id}>{x.nome}</option>
                                     ))}
