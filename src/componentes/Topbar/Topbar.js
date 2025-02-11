@@ -43,7 +43,7 @@ export function Topbar({ children }) {
                         <h2>Produtos</h2>
                     </Link>
                     <Link to="/Relatorios" className={style.botao_categorias}>
-                        <h2>Relatorios</h2>
+                        <h2>Relatórios</h2>
                     </Link>
                 </div>
 

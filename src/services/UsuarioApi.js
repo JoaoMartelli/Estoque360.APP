@@ -60,6 +60,11 @@ const UsuarioApi = {
             responseType: "blob"
         });
         return response.data;
+    },
+
+    async LoginGoogle(idToken) {
+        const response = await HTTPClient.post("Usuario/LoginGoogle", { idToken });
+        return response.data;
     }
 }
 

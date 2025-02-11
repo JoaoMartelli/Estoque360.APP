@@ -14,3 +14,16 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.pagina_cabecalho {
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    align-items: center;
+    color: black;
+    margin-bottom: 5vh;
+}
+
+.titulo{
+    margin-bottom: 2vh;
+}

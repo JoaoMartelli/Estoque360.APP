@@ -32,8 +32,14 @@ export function Perfil() {
             const usuario = await UsuarioApi.ObterUsuario(id);
             setEmail(usuario.email);
             setNome(usuario.nome);
-            const dataFormatada = new Date(usuario.dataNascimento).toLocaleDateString('pt-BR');
-            setDataNascimento(dataFormatada);
+            // const dataFormatada = new Date(usuario.dataNascimento).toLocaleDateString('pt-BR');
+            // setDataNascimento(dataFormatada);
+            if (usuario.dataNascimento && usuario.dataNascimento !== 'null') {
+                const dataFormatada = new Date(usuario.dataNascimento).toLocaleDateString('pt-BR');
+                setDataNascimento(dataFormatada);
+            } else {
+                setDataNascimento(null); // Ou outro valor padrão que você preferir
+            }
         } catch (error) {
             console.log(`Erro ao carregar o perfil ${error.response.data}`);
         } finally {
@@ -96,15 +102,23 @@ export function Perfil() {
 
     async function editarPerfil() {
         try {
+            console.log(novaDataNascimento);
             setLoading(true);
-            const dataISO = new Date(`${novaDataNascimento}T00:00:00.000Z`).toISOString();
-            console.log(dataISO);
+            let dataISO = null;
+
+            if (novaDataNascimento) {
+                const [dia, mes, ano] = novaDataNascimento.split('/'); // Exemplo: "16/02/2005"
+                const dataFormatada = `${ano}-${mes}-${dia}`; // Converte para "2005-02-16"
+                dataISO = new Date(dataFormatada).toISOString();
+            }
+
+            console.log("Data antes de enviar:", dataISO);
+
             await UsuarioApi.AtualizarInformacoes(id, novoNome, dataISO);
             setMensagemAlerta("Perfil atualizado com sucesso!");
             setTipoAlerta("success");
         } catch (error) {
             const mensagemErro = error.response?.data || "Erro desconhecido.";
-
             setMensagemAlerta(`Erro ao atualizar o perfil ${mensagemErro}`);
             setTipoAlerta("danger");
         } finally {
@@ -114,6 +128,7 @@ export function Perfil() {
             exibirAlerta();
         }
     }
+
 
     function deslogar() {
         localStorage.removeItem('id');
@@ -140,7 +155,21 @@ export function Perfil() {
 
                 <div className={style.pagina_cabecalho}>
                     <h3>Perfil</h3>
-                    <Link className={style.botao_novo} onClick={() => {setMostrarModalEditarPerfil(true); setNovaDataNascimento(dataNascimento); setNovoNome(nome);}}>Editar Perfil</Link>
+                    <Link
+                        className={style.botao_novo}
+                        onClick={() => {
+                            setMostrarModalEditarPerfil(true);
+                            if (dataNascimento) {
+                                setNovaDataNascimento(dataNascimento);
+                            } else {
+                                setNovaDataNascimento('');
+                            }
+                            setNovoNome(nome);
+                        }}
+                    >
+                        Editar Perfil
+                    </Link>
+
                 </div>
 
                 <div className={style.perfil_conteudo}>

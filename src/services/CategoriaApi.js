@@ -30,6 +30,11 @@ const CategoriaApi = {
     async ExcluirCategoria(categoriaId){
         const response = await HTTPClient.delete(`Categoria/Deletar/${categoriaId}`);
         return response.data;
+    },
+
+    async ObterProdutosPorCategoriaDoUsuario(usuarioId){
+        const response = await HTTPClient.get(`Categoria/ObterProdutosPorCategoriaDoUsuario/${usuarioId}`);
+        return response.data;
     }
 }
 

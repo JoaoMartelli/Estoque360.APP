@@ -8,6 +8,7 @@ import Alert from "../../componentes/Alerta/Alerta";
 import Logo from "../../assets/LogoBrancoEstoque360.png";
 import Loader from "../../componentes/Loader/Loader";
 import InputMask from 'react-input-mask';
+import { GoogleLogin } from "@react-oauth/google";
 
 export function Login() {
     const [nome, setNome] = useState('');
@@ -52,6 +53,21 @@ export function Login() {
         }
     }
 
+    async function botaoLoginGoogle(credential) {
+        setLoading(true);
+        try {
+            const id = await UsuarioApi.LoginGoogle(credential);
+            localStorage.setItem("id", id);
+            navigate("/Categorias");
+        } catch (error) {
+            setMensagemAlerta(`Erro ao logar com Google: ${error.response.data}`);
+            setTipoAlerta("danger");
+            exibirAlerta();
+        } finally {
+            setLoading(false);
+        }
+    }
+
     async function botaoCadastro() {
         setLoading(true);
         try {
@@ -83,7 +99,7 @@ export function Login() {
     return (
         <div className={style.conteudo}>
             {loading && <Loader />}
-            
+
             <div className={style.login_container}>
                 <img src={Logo} alt="Logo-Estoque360" className={style.logo} />
                 <div className={style.login_body}>
@@ -98,12 +114,12 @@ export function Login() {
                     }}>
                         {cadastro && (
                             <>
-                                <Form.Group controlId="formNome" className="mb-3">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Nome</Form.Label>
                                     <Form.Control id={style.campos} type="text" placeholder="Digite seu nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
                                 </Form.Group>
 
-                                <Form.Group controlId="formDataNascimento" className="mb-3">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Data nascimento</Form.Label>
                                     <Form.Control
                                         id={style.campos}
@@ -130,12 +146,12 @@ export function Login() {
                             </>
                         )}
 
-                        <Form.Group controlId="formEmail" className="mb-3">
+                        <Form.Group className="mb-3">
                             <Form.Label>Email</Form.Label>
                             <Form.Control id={style.campos} type="email" placeholder="Digite seu email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                         </Form.Group>
 
-                        <Form.Group controlId="formSenha" className="mb-3">
+                        <Form.Group className="mb-3">
                             <Form.Label>Senha</Form.Label>
                             <Form.Control id={style.campos} type="password" placeholder="Digite sua senha" name="senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
                         </Form.Group>
@@ -143,9 +159,20 @@ export function Login() {
                         <Button id={style.botao_entrar} variant="primary" type="submit">
                             {cadastro ? "Cadastrar" : "Entrar"}
                         </Button>
+
                     </Form>
+
+                    <GoogleLogin
+                        onSuccess={(credentialResponse) => botaoLoginGoogle(credentialResponse.credential)}
+                        onError={() => {
+                            setMensagemAlerta("Erro ao autenticar com Google.");
+                            setTipoAlerta("danger");
+                            exibirAlerta();
+                        }}
+                    />
                 </div>
                 <div className={style.login_footer}>
+
                     <Button variant="second" onClick={() => { resetar(); setCadastro(!cadastro); }}>
                         {cadastro ? "Já tem uma conta? Faça login" : "Não tem uma conta? Cadastre-se"}
                     </Button>

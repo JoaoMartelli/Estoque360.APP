@@ -170,7 +170,7 @@ export function Categorias() {
 
                         <Modal.Body>
 
-                            <Form.Group controlId="formNome" className="mb-3">
+                            <Form.Group className="mb-3">
                                 <Form.Label id={style.label}>Nome</Form.Label>
 
                                 <Form.Control id={style.formulario} type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
@@ -194,7 +194,7 @@ export function Categorias() {
                         </Modal.Header>
 
                         <Modal.Body>
-                            <Form.Group controlId="formNome" className="mb-3">
+                            <Form.Group className="mb-3">
                                 <Form.Label id={style.label}>Nome</Form.Label>
                                 <Form.Control id={style.formulario} type="text" placeholder="Nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
                             </Form.Group>
